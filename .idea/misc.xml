@@ -3,8 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/amirn/StudioProjects/MovieSearch/app/src/main/res/drawable/bg_search.xml" value="0.137" />
+        <entry key="..\:/Users/amirn/StudioProjects/MovieSearch/app/src/main/res/drawable/bg_view.xml" value="0.137" />
+        <entry key="..\:/Users/amirn/StudioProjects/MovieSearch/app/src/main/res/drawable/ic_arrow_down.xml" value="0.137" />
         <entry key="..\:/Users/amirn/StudioProjects/MovieSearch/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/amirn/StudioProjects/MovieSearch/app/src/main/res/layout/dialog_progress.xml" value="0.2" />
+        <entry key="..\:/Users/amirn/StudioProjects/MovieSearch/app/src/main/res/layout/fragment_details.xml" value="0.2" />
+        <entry key="..\:/Users/amirn/StudioProjects/MovieSearch/app/src/main/res/layout/fragment_recent.xml" value="0.1859375" />
+        <entry key="..\:/Users/amirn/StudioProjects/MovieSearch/app/src/main/res/layout/fragment_search.xml" value="0.1859375" />
       </map>
     </option>
   </component>

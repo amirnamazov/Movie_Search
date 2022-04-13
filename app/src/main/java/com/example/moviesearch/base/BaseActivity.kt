@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import com.example.moviesearch.R
-import com.example.moviesearch.api.RequestApi
+import com.example.moviesearch.api.request.RequestApi
 import com.example.moviesearch.utils.Connection.isNetworkConnected
 import com.google.android.material.snackbar.Snackbar
 import org.kodein.di.Kodein

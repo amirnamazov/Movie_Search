@@ -1,8 +1,8 @@
 package com.example.moviesearch.base
 
 import android.app.Application
-import com.example.moviesearch.api.RequestApi
-import com.example.moviesearch.api.RequestClient
+import com.example.moviesearch.api.request.RequestApi
+import com.example.moviesearch.api.request.RequestClient
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
