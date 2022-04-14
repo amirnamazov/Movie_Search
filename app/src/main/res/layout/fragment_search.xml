@@ -41,11 +41,11 @@
             android:id="@+id/sp_years"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_view"
+            android:background="@drawable/bg_spinner"
             android:dropDownWidth="match_parent"
             android:dropDownVerticalOffset="51dp"
             android:minHeight="51dp"
-            android:popupBackground="@drawable/bg_view"
+            android:popupBackground="@drawable/bg_spinner"
             android:popupElevation="5dp"
             android:spinnerMode="dropdown"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -73,11 +73,11 @@
             android:id="@+id/sp_plot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_view"
+            android:background="@drawable/bg_spinner"
             android:dropDownWidth="match_parent"
             android:dropDownVerticalOffset="51dp"
             android:minHeight="51dp"
-            android:popupBackground="@drawable/bg_view"
+            android:popupBackground="@drawable/bg_spinner"
             android:popupElevation="5dp"
             android:spinnerMode="dropdown"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -91,5 +91,27 @@
             android:background="@drawable/ic_arrow_down" />
 
     </RelativeLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:background="@drawable/bg_button"
+        android:layout_marginTop="8dp"
+        android:minHeight="51dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rl_year" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvResults"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSearch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

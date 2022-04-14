@@ -1,5 +1,9 @@
-package com.example.moviesearch.api.model.response
+package com.example.moviesearch.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class MovieDetails(
     val Title: String,
     val Year: String,
@@ -26,10 +30,11 @@ data class MovieDetails(
     val Production: String,
     val Website: String,
     val Response: String,
-    val Error: String
-)
+    val Error: String? = null
+) : Parcelable
 
+@Parcelize
 data class Rating(
     val Source: String,
     val Value: String,
-)
+) : Parcelable

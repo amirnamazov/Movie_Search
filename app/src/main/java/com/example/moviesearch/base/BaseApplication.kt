@@ -1,8 +1,10 @@
 package com.example.moviesearch.base
 
 import android.app.Application
-import com.example.moviesearch.api.request.RequestApi
-import com.example.moviesearch.api.request.RequestClient
+import com.example.moviesearch.api.RequestApi
+import com.example.moviesearch.api.RequestClient
+import com.example.moviesearch.db.dao.MovieDAO
+import com.example.moviesearch.db.instance.MovieDB
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -17,5 +19,7 @@ class BaseApplication : Application(), KodeinAware {
 
         bind<RequestClient>() with singleton { RequestClient() }
         bind<RequestApi>() with singleton { instance<RequestClient>().instance }
+        bind<MovieDB>() with singleton { MovieDB.getInstance(instance()) }
+        bind<MovieDAO>() with singleton { instance<MovieDB>().movieDAO }
     }
 }

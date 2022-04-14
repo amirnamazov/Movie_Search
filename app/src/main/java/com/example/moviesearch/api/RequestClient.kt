@@ -1,4 +1,4 @@
-package com.example.moviesearch.api.request
+package com.example.moviesearch.api
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

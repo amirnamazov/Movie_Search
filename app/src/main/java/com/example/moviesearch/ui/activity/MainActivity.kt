@@ -20,10 +20,6 @@ class MainActivity : BaseActivity() {
         setContentView(b.root)
 
         bindViewPagerWithTabs()
-
-//        requestApi.getData().callBack({
-//
-//        })
     }
 
     private fun bindViewPagerWithTabs() {
@@ -34,16 +30,9 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupViewPager() {
-        val fragList = List<Fragment>(2) { SearchFragment() }
+        val fragList = listOf(SearchFragment(), SearchFragment(false))
         val adapter = ViewPagerAdapter(this, fragList)
 
         b.viewPager2.adapter = adapter
-//        b.viewPager2.isUserInputEnabled = false
-//        b.viewPager2.offscreenPageLimit = 1
-//        b.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-//            override fun onPageSelected(position: Int) {
-//
-//            }
-//        })
     }
 }

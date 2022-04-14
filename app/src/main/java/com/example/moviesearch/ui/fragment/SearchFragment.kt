@@ -1,60 +1,106 @@
 package com.example.moviesearch.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.moviesearch.R
+import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.moviesearch.base.BaseFragment
+import com.example.moviesearch.databinding.FragmentSearchBinding
+import com.example.moviesearch.db.model.Movie
+import com.example.moviesearch.ui.activity.DetailsActivity
+import com.example.moviesearch.ui.adapter.MovieAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class SearchFragment(private val browse: Boolean = true) : BaseFragment(), MovieAdapter.ItemClick {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SearchFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SearchFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var b: FragmentSearchBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onCreateView(i: LayoutInflater, c: ViewGroup?, saved: Bundle?): View {
+        b = FragmentSearchBinding.inflate(i, c, false)
+        return b.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initialize()
+    }
+
+    override fun initialize() {
+
+        val plotList = listOf("Short", "Full")
+        b.spPlot.adapter = ArrayAdapter(requireContext(),
+            android.R.layout.simple_spinner_dropdown_item, plotList)
+
+        val yearList = Array(100) { (2022 - it).toString() }
+        b.spYears.adapter = ArrayAdapter(requireContext(),
+            android.R.layout.simple_spinner_dropdown_item, yearList)
+
+        if (!browse) getDataFromLocalDB()
+
+        b.btnSearch.setOnClickListener {
+            if (browse) {
+                if (b.etSearchLayout.isFilled(b.etSearch)) {
+                    it.hideKeyboard()
+                    getDataFromServer()
+                }
+            } else {
+                it.hideKeyboard()
+                getDataFromLocalDB()
+            }
+
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SearchFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SearchFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun getDataFromServer() = requestApi.getMovieData(
+        b.etSearch.text.toString(),
+        b.spYears.selectedItem.toString(),
+        b.spPlot.selectedItem.toString())
+        .callBack({ movie ->
+            when {
+                movie.Response.toBoolean() -> {
+                    setAdapter(listOf(Movie(0, movie, null, "0")))
+                }
+                movie.Error!!.isNotEmpty() -> {
+                    showSnackBar(movie.Error)
+                }
+                else -> {
+                    showSnackBar("Something went wrong.")
                 }
             }
+        })
+
+    private fun getDataFromLocalDB() {
+        showProgressDialog()
+        CoroutineScope(Dispatchers.IO).launch {
+            withContext(this.coroutineContext) {
+                requireActivity().runOnUiThread {
+                    val list = movieDAO.getAllMovies().filterIndexed { _, movie ->
+                        movie.movieDetails.Title.contains(b.etSearch.text.toString())
+                    }
+                    setAdapter(list)
+                    hideProgressDialog()
+                }
+            }
+        }
+    }
+
+    private fun setAdapter(list: List<Movie>) {
+        b.rvResults.layoutManager = LinearLayoutManager(requireContext())
+        b.rvResults.adapter = MovieAdapter(this, list, browse)
+    }
+
+    override fun onItemClick(id: Int) {
+        Intent(requireContext(), DetailsActivity :: class.java).apply {
+            val movie = movieDAO.getAllMovies().find { it.id == id }
+            putExtra("Movie", movie)
+            startActivity(this)
+        }
     }
 }
