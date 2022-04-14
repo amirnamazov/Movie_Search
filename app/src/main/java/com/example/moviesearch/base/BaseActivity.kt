@@ -90,8 +90,9 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
         return true
     }
 
-    fun loadImage(imageView: ImageView, string: String?,
-                  onCompleted: (byteArray: ByteArray?) -> Unit, byteArray: ByteArray? = null) =
+    fun loadImage(
+        imageView: ImageView, string: String?,
+        onCompleted: (byteArray: ByteArray) -> Unit, byteArray: ByteArray? = null) =
         Glide.with(imageView.context)
             .load(string ?: byteArray)
             .apply(
@@ -107,7 +108,7 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
                     target: Target<Drawable>?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    onCompleted(null)
+                    onCompleted(byteArrayOf())
                     return false
                 }
 

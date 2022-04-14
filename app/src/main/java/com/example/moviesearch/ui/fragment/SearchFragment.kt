@@ -34,11 +34,12 @@ class SearchFragment(private val browse: Boolean = true) : BaseFragment(), Movie
 
     override fun initialize() {
 
-        val plotList = listOf("Short", "Full")
+        val plotList = listOf("Select", "Short", "Full")
         b.spPlot.adapter = ArrayAdapter(requireContext(),
             android.R.layout.simple_spinner_dropdown_item, plotList)
 
-        val yearList = Array(100) { (2022 - it).toString() }
+        val yearList = MutableList(100) { (2022 - it).toString() }
+        yearList.add(0, "Select")
         b.spYears.adapter = ArrayAdapter(requireContext(),
             android.R.layout.simple_spinner_dropdown_item, yearList)
 
@@ -60,8 +61,9 @@ class SearchFragment(private val browse: Boolean = true) : BaseFragment(), Movie
 
     private fun getDataFromServer() = requestApi.getMovieData(
         b.etSearch.text.toString(),
-        b.spYears.selectedItem.toString(),
-        b.spPlot.selectedItem.toString())
+        if (b.spYears.selectedItem.toString() == "Select") null else b.spYears.selectedItem.toString(),
+        if (b.spPlot.selectedItem.toString() == "Select") null else b.spPlot.selectedItem.toString(),
+    )
         .callBack({ movie ->
             when {
                 movie.Response.toBoolean() -> {

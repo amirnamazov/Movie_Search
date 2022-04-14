@@ -18,7 +18,7 @@ data class MovieDetails(
     val Language: String,
     val Country: String,
     val Awards: String,
-    val Poster: String,
+    val Poster: String? = null,
     val Ratings: List<Rating>,
     val Metascore: String,
     val imdbRating: String,

@@ -36,7 +36,8 @@ abstract class BaseFragment : Fragment(), KodeinAware {
         return true
     }
 
-    fun loadImage(imageView: ImageView, string: String, onCompleted: (byteArray: ByteArray?) -> Unit) =
+    fun loadImage(imageView: ImageView, string: String?,
+                  onCompleted: (byteArray: ByteArray) -> Unit) =
         baseActivity?.loadImage(imageView, string, onCompleted)
 
     fun View.hideKeyboard() = baseActivity?.hideKeyboard(this)

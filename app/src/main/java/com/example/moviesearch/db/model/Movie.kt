@@ -13,7 +13,7 @@ data class Movie (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val movieDetails: MovieDetails,
-    val moviePoster: ByteArray?,
+    val moviePoster: ByteArray? = null,
     val myRating: String
 ) : Parcelable {
     override fun equals(other: Any?): Boolean {

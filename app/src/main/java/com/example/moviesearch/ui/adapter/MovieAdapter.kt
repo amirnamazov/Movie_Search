@@ -37,7 +37,7 @@ class MovieAdapter(private val frag: Fragment, private val list: List<Movie>,
             else try {
                 (frag as BaseFragment).loadImage(b.poster, list[p].movieDetails.Poster) {
                     setTexts(p)
-                    frag.movieDAO.insert(Movie(0, list[p].movieDetails, it!!, list[p].myRating))
+                    frag.movieDAO.insert(Movie(0, list[p].movieDetails, it, list[p].myRating))
                 }
             } catch (e: Exception) {
                 setTexts(p)
@@ -46,7 +46,8 @@ class MovieAdapter(private val frag: Fragment, private val list: List<Movie>,
             }
 
             b.root.setOnClickListener {
-                (frag as ItemClick).onItemClick(list[p].id)
+                if (!browse) (frag as ItemClick).onItemClick(list[p].id)
+                else (frag as ItemClick).onItemClick((frag as BaseFragment).movieDAO.getAllMovies().last().id)
             }
         }
 
